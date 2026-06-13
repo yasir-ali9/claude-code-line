@@ -18,6 +18,7 @@ if (process.stdin.isTTY) {
   const { getUsageData } = await import('./usage/cache.js');
   const { getCliVersion } = await import('./cli-version/cache.js');
   const { loadConfig } = await import('./config/index.js');
+  const { getUpdateLine } = await import('./update/check.js');
 
   let raw = '';
   process.stdin.setEncoding('utf8');
@@ -38,8 +39,11 @@ if (process.stdin.isTTY) {
       const widgets = config.theme === 'custom' ? config.widgets : undefined;
       const out = renderStatusLine(ctx, widgets);
 
+      const updateLine = getUpdateLine();
+      const full = updateLine ? `${out}\n${updateLine}` : out;
+
       // Replace spaces with non-breaking spaces to prevent terminal trimming
-      process.stdout.write(out.replace(/ /g, ' '));
+      process.stdout.write(full.replace(/ /g, ' '));
     } catch {
       process.stdout.write('Claude');
     }

@@ -10,7 +10,7 @@ export function getClaudeSettingsPath(): string {
 }
 
 export function writeStatusLineCommand(): void {
-  const command = `npx -y ${PKG_NAME}@latest`;
+  const command = `npx -y ${PKG_NAME}`;
   const p = getClaudeSettingsPath();
   let settings: Record<string, unknown> = {};
   try { settings = JSON.parse(fs.readFileSync(p, 'utf8')); } catch { /* new file */ }

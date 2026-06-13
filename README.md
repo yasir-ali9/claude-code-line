@@ -20,7 +20,7 @@ To set it up without the TUI, add to `~/.claude/settings.json`:
 {
   "statusLine": {
     "type": "command",
-    "command": "npx -y claude-code-line@latest"
+    "command": "npx -y claude-code-line"
   }
 }
 ```
