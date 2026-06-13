@@ -82,7 +82,7 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
 
   return (
     <Box flexDirection="column" padding={1}>
-      <Text bold>ccms statusline</Text>
+      <Text bold>Claude Code Line</Text>
 
       <Box marginTop={1} marginBottom={1}>
         <Preview config={current} />
