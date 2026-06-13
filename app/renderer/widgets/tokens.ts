@@ -6,7 +6,7 @@ import { formatTokens, progressBar } from '../format.js';
 export function renderTokens(
   ctx: RenderContext,
   color?: PaletteColor,
-  tokenFormat: TokenFormat = 'bar+tokens+pct',
+  tokenFormat: TokenFormat = 'tokens+pct',
   barStyle: BarStyle = 'slider',
 ): string | null {
   const cw = ctx.status.context_window;
