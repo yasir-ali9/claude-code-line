@@ -4,33 +4,17 @@ Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
 ## Install
 
-**Option 1 — Pinned global install** (recommended, fastest render):
-```bash
-npm install -g claude-code-line
-claude-code-line
-```
+Run the TUI and select **Save to Claude Code** — it writes the command automatically:
 
-**Option 2 — via npx** (no install needed, small delay per render):
 ```bash
 npx claude-code-line
 ```
 
-Inside the TUI, select **Save to Claude Code** and choose your preferred update style. It writes the command to `~/.claude/settings.json` automatically. Restart Claude Code to apply.
+Restart Claude Code to apply. That's it.
 
 ## Manual setup
 
-Add to `~/.claude/settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "claude-code-line"
-  }
-}
-```
-
-Or for npx auto-update:
+To set it up without the TUI, add to `~/.claude/settings.json`:
 
 ```json
 {

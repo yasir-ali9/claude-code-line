@@ -3,10 +3,9 @@ import { Box, Text, useInput } from 'ink';
 import type { Config } from '../../types.js';
 import { Preview } from '../components/preview.js';
 import { WidgetEditor } from './editor.js';
-import { InstallMenu } from './install.js';
-import { checkCommandAvailability, type CommandAvailability } from '../../config/install.js';
+import { writeStatusLineCommand, getClaudeSettingsPath } from '../../config/install.js';
 
-type Screen = 'home' | 'editor' | 'install';
+type Screen = 'home' | 'editor';
 
 const THEMES = ['default', 'custom'] as const;
 
@@ -25,7 +24,6 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
   const [current, setCurrent] = useState<Config>(config);
   const [cursor, setCursor]   = useState(0);
   const [message, setMessage] = useState<string | null>(null);
-  const [availability, setAvailability] = useState<CommandAvailability | null>(null);
 
   const totalRows = THEMES.length + OPTIONS.length;
 
@@ -36,7 +34,6 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
     if (key.downArrow) setCursor(i => Math.min(totalRows - 1, i + 1));
 
     if (key.return) {
-      // theme section
       if (cursor < THEMES.length) {
         const chosen = THEMES[cursor]!;
         const next: Config = { ...current, theme: chosen };
@@ -47,15 +44,16 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
         return;
       }
 
-      // options section
       const item = OPTIONS[cursor - THEMES.length];
       if (!item) return;
 
       if (item.key === 'install') {
-        const avail = checkCommandAvailability();
-        setAvailability(avail);
-        setMessage(null);
-        setScreen('install');
+        try {
+          writeStatusLineCommand();
+          setMessage(`Saved. Restart Claude Code to apply.`);
+        } catch (e) {
+          setMessage(`Failed: ${e instanceof Error ? e.message : String(e)}`);
+        }
       }
     }
 
@@ -78,16 +76,6 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
           setScreen('home');
         }}
         onEscape={() => setScreen('home')}
-      />
-    );
-  }
-
-  if (screen === 'install' && availability) {
-    return (
-      <InstallMenu
-        availability={availability}
-        onDone={(msg) => { setMessage(msg); setScreen('home'); }}
-        onCancel={() => setScreen('home')}
       />
     );
   }
@@ -126,13 +114,20 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
         {OPTIONS.map((item, i) => {
           const isSelected = cursor === THEMES.length + i;
           return (
-            <Box key={item.key}>
-              <Text color={isSelected ? 'white' : undefined} dimColor={!isSelected}>
-                {isSelected ? '> ' : '  '}
-              </Text>
-              <Text color={isSelected ? 'white' : undefined} dimColor={!isSelected}>
-                {item.label}
-              </Text>
+            <Box key={item.key} flexDirection="column">
+              <Box>
+                <Text color={isSelected ? 'white' : undefined} dimColor={!isSelected}>
+                  {isSelected ? '> ' : '  '}
+                </Text>
+                <Text color={isSelected ? 'white' : undefined} dimColor={!isSelected}>
+                  {item.label}
+                </Text>
+              </Box>
+              {isSelected && (
+                <Box marginLeft={4}>
+                  <Text dimColor>writes npx -y claude-code-line@latest to {getClaudeSettingsPath()}</Text>
+                </Box>
+              )}
             </Box>
           );
         })}
