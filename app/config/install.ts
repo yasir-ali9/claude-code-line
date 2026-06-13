@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import { execSync } from 'child_process';
+import { spawn } from 'child_process';
 
 export const PKG_NAME = 'claude-code-line';
 
@@ -18,6 +18,14 @@ export function writeStatusLineCommand(): void {
   fs.writeFileSync(p, JSON.stringify(settings, null, 2), 'utf8');
 }
 
-export function installGlobal(): void {
-  execSync(`npm install -g ${PKG_NAME}`, { stdio: 'ignore', windowsHide: true });
+export function installGlobal(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const proc = spawn('npm', ['install', '-g', PKG_NAME], {
+      stdio: 'ignore',
+      windowsHide: true,
+      shell: true,
+    });
+    proc.on('close', (code) => code === 0 ? resolve() : reject(new Error(`exit ${code}`)));
+    proc.on('error', reject);
+  });
 }

@@ -40,14 +40,11 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
         return;
       }
       // Save to Claude Code
-      try {
-        setMessage('Installing...');
-        writeStatusLineCommand();
-        installGlobal();
-        setMessage('Saved. Restart Claude Code to apply.');
-      } catch (e) {
-        setMessage(`Failed: ${e instanceof Error ? e.message : String(e)}`);
-      }
+      writeStatusLineCommand();
+      setMessage('Installing claude-code-line globally...');
+      installGlobal()
+        .then(() => setMessage('Saved. Restart Claude Code to apply.'))
+        .catch((e: unknown) => setMessage(`Failed: ${e instanceof Error ? e.message : String(e)}`));
     }
 
     if (key.escape) onQuit();
