@@ -4,13 +4,17 @@ Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
 ## Install
 
-Run the TUI:
-
 ```bash
-npx claude-code-line
+npm install -g claude-code-line
 ```
 
-Select **Save to Claude Code** — it writes the command to your settings and tells you to run `npm install -g claude-code-line` once for zero-delay rendering. Restart Claude Code to apply.
+Then open the TUI to customize and save to Claude Code:
+
+```bash
+claude-code-line
+```
+
+Select **Save to Claude Code** and restart Claude Code to apply.
 
 ## Manual setup
 
@@ -25,6 +29,12 @@ To set it up without the TUI, add to `~/.claude/settings.json`:
 }
 ```
 
+## Update
+
+```bash
+npm install -g claude-code-line
+```
+
 ## Themes
 
 - **Default** — minimal neutral statusline: project name, git branch, model, context usage, effort, rate limits, and CLI version
@@ -35,12 +45,12 @@ To set it up without the TUI, add to `~/.claude/settings.json`:
 | Widget | Shows |
 |--------|-------|
 | Name | Current project folder |
-| Git | branch and diff stats |
+| Git | Branch and diff stats |
 | Model | Claude model name |
-| Tokens | Context bar + token count (customizable format) |
+| Tokens | Context usage and token count (customizable format) |
 | Effort | Reasoning effort level |
-| 5h Rate | 5-hour usage + reset time (customizable format) |
-| 7d Rate | 7-day usage + reset time (customizable format) |
+| 5h Rate | 5-hour usage and reset time (customizable format) |
+| 7d Rate | 7-day usage and reset time (customizable format) |
 | Extra | Extra usage credits |
 | Version | Claude CLI version |
 | Session Cost | Session cost in USD |
@@ -70,12 +80,6 @@ To use your local build as the Claude Code statusline, add the absolute path man
 ```
 
 Restart Claude Code to apply.
-
-To rebuild after changes:
-
-```bash
-npm run build
-```
 
 ## Requirements
 
