@@ -1,6 +1,6 @@
 {
   "name": "claude-code-line",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A minimal, customizable statusline for Claude Code CLI",
   "type": "module",
   "bin": {
