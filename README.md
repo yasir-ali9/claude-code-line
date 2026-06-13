@@ -4,13 +4,13 @@ Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
 ## Install
 
-Run the TUI and select **Save to Claude Code** — it writes the command automatically:
+Run the TUI:
 
 ```bash
 npx claude-code-line
 ```
 
-Restart Claude Code to apply. That's it.
+Select **Save to Claude Code** — it writes the command to your settings and tells you to run `npm install -g claude-code-line` once for zero-delay rendering. Restart Claude Code to apply.
 
 ## Manual setup
 
@@ -20,7 +20,7 @@ To set it up without the TUI, add to `~/.claude/settings.json`:
 {
   "statusLine": {
     "type": "command",
-    "command": "npx -y claude-code-line"
+    "command": "claude-code-line"
   }
 }
 ```
@@ -35,7 +35,7 @@ To set it up without the TUI, add to `~/.claude/settings.json`:
 | Widget | Shows |
 |--------|-------|
 | Name | Current project folder |
-| Git | `@branch (+N -N)` diff stats |
+| Git | branch and diff stats |
 | Model | Claude model name |
 | Tokens | Context bar + token count (customizable format) |
 | Effort | Reasoning effort level |

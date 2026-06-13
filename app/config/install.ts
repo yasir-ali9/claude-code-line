@@ -4,18 +4,15 @@ import * as os from 'os';
 
 export const PKG_NAME = 'claude-code-line';
 
-export type InstallStyle = 'global' | 'npx';
-
 export function getClaudeSettingsPath(): string {
   const dir = process.env['CLAUDE_CONFIG_DIR'] ?? path.join(os.homedir(), '.claude');
   return path.join(dir, 'settings.json');
 }
 
-export function writeStatusLineCommand(style: InstallStyle): void {
-  const command = style === 'global' ? PKG_NAME : `npx -y ${PKG_NAME}`;
+export function writeStatusLineCommand(): void {
   const p = getClaudeSettingsPath();
   let settings: Record<string, unknown> = {};
   try { settings = JSON.parse(fs.readFileSync(p, 'utf8')); } catch { /* new file */ }
-  settings['statusLine'] = { type: 'command', command };
+  settings['statusLine'] = { type: 'command', command: PKG_NAME };
   fs.writeFileSync(p, JSON.stringify(settings, null, 2), 'utf8');
 }
