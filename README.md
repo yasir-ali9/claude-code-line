@@ -1,4 +1,4 @@
-# claude-code-line
+# Claude Code Line
 
 Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
