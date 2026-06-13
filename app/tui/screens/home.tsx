@@ -3,7 +3,7 @@ import { Box, Text, useInput } from 'ink';
 import type { Config } from '../../types.js';
 import { Preview } from '../components/preview.js';
 import { WidgetEditor } from './editor.js';
-import { writeStatusLineCommand, getClaudeSettingsPath } from '../../config/install.js';
+import { writeStatusLineCommand, installGlobal, getClaudeSettingsPath } from '../../config/install.js';
 
 type Screen = 'home' | 'editor';
 
@@ -41,8 +41,10 @@ export function Home({ config, onSave, onQuit }: HomeProps) {
       }
       // Save to Claude Code
       try {
+        setMessage('Installing...');
         writeStatusLineCommand();
-        setMessage('Saved. Run: npm install -g claude-code-line  then restart Claude Code.');
+        installGlobal();
+        setMessage('Saved. Restart Claude Code to apply.');
       } catch (e) {
         setMessage(`Failed: ${e instanceof Error ? e.message : String(e)}`);
       }
