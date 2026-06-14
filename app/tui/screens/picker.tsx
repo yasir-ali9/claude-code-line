@@ -42,7 +42,7 @@ export function AddPicker({ activeWidgets, onAdd, onEscape }: AddPickerProps) {
 
   return (
     <Box flexDirection="column">
-      <Text bold>Add widget  (esc to cancel)</Text>
+      <Text bold>New widget</Text>
       <Box marginTop={1}>
         <List
           items={available}
@@ -55,6 +55,9 @@ export function AddPicker({ activeWidgets, onAdd, onEscape }: AddPickerProps) {
             </Box>
           )}
         />
+      </Box>
+      <Box marginTop={1}>
+        <Text dimColor>[Enter] Select    [Esc] Back</Text>
       </Box>
     </Box>
   );

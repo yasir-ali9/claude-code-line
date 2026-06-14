@@ -23,7 +23,7 @@ if (process.stdin.isTTY) {
   let raw = '';
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', (chunk: string) => { raw += chunk; });
-  process.stdin.on('end', () => {
+  process.stdin.on('end', async () => {
     if (!raw.trim()) {
       process.stdout.write('Claude');
       process.exit(0);
@@ -39,7 +39,7 @@ if (process.stdin.isTTY) {
       const widgets = config.theme === 'custom' ? config.widgets : undefined;
       const out = renderStatusLine(ctx, widgets);
 
-      const updateLine = getUpdateLine();
+      const updateLine = await getUpdateLine();
       const full = updateLine ? `${out}\n${updateLine}` : out;
 
       // Replace spaces with non-breaking spaces to prevent terminal trimming

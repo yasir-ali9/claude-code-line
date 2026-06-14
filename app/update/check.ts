@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as os from 'os';
 import * as https from 'https';
 
-const CURRENT_VERSION = '1.0.8';
+const CURRENT_VERSION = '1.0.9';
 const NPM_REGISTRY_URL = 'https://registry.npmjs.org/claude-code-line/latest';
 const CACHE_TTL = 86_400_000; // 24 hours
 const cacheDir = path.join(os.tmpdir(), 'claude-code-line');
@@ -56,33 +56,32 @@ function fetchLatestVersion(): Promise<string | null> {
   });
 }
 
-export function getUpdateLine(): string | null {
+function toUpdateLine(version: string): string {
+  return `Update available: v${version}  run: npm install -g claude-code-line`;
+}
+
+export async function getUpdateLine(): Promise<string | null> {
   const cached = readCache();
   const now = Date.now();
 
   if (cached && now - cached.mtime < CACHE_TTL) {
-    if (semverGt(cached.version, CURRENT_VERSION)) {
-      return `Update available: v${cached.version}  run: npm install -g claude-code-line`;
-    }
-    return null;
+    return semverGt(cached.version, CURRENT_VERSION) ? toUpdateLine(cached.version) : null;
   }
 
-  // Stampede lock
+  // Fetch fresh — await so piped mode gets the result before process.exit
   try {
     fs.mkdirSync(cacheDir, { recursive: true });
-    fs.utimesSync(cacheFile, new Date(), new Date());
-  } catch {
-    try { fs.writeFileSync(cacheFile, '', 'utf8'); } catch { /* ignore */ }
+  } catch { /* ignore */ }
+
+  const latest = await fetchLatestVersion();
+  if (latest) {
+    writeCache(latest);
+    return semverGt(latest, CURRENT_VERSION) ? toUpdateLine(latest) : null;
   }
 
-  // Fetch async, don't block render
-  fetchLatestVersion().then((v) => {
-    if (v) writeCache(v);
-  }).catch(() => { /* ignore */ });
-
-  // Return based on stale cache
+  // Fallback to stale cache
   if (cached && semverGt(cached.version, CURRENT_VERSION)) {
-    return `Update available: v${cached.version}  run: npm install -g claude-code-line`;
+    return toUpdateLine(cached.version);
   }
   return null;
 }
