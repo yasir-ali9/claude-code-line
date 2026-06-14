@@ -2,6 +2,10 @@
 
 Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
+https://github.com/yasir-ali9/claude-code-line/raw/main/public/demo.mp4
+
+![Demo](https://raw.githubusercontent.com/yasir-ali9/claude-code-line/main/public/demo.png)
+
 ## Install
 
 ```bash
