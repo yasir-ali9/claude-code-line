@@ -4,7 +4,7 @@ Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
 ![Demo](https://raw.githubusercontent.com/yasir-ali9/claude-code-line/main/public/demo.png)
 
-<video src="https://github.com/user-attachments/assets/3a43af11-94b9-48a7-864c-6b2f4517b38c" controls autoplay muted loop width="100%"></video>
+<video src="https://github.com/user-attachments/assets/3a43af11-94b9-48a7-864c-6b2f4517b38c" controls width="100%"></video>
 
 ## Install
 
