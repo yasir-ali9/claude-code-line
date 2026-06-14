@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as os from 'os';
 import * as https from 'https';
 
-const CURRENT_VERSION = '1.0.9';
+const CURRENT_VERSION = '1.1.0';
 const NPM_REGISTRY_URL = 'https://registry.npmjs.org/claude-code-line/latest';
 const CACHE_TTL = 86_400_000; // 24 hours
 const cacheDir = path.join(os.tmpdir(), 'claude-code-line');
