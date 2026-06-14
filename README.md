@@ -2,7 +2,7 @@
 
 Minimal, customizable statusline for [Claude Code](https://claude.ai/code) CLI.
 
-<video src="https://github.com/yasir-ali9/claude-code-line/raw/main/public/demo.mp4" controls width="100%"></video>
+<video src="https://github.com/user-attachments/assets/b6836813-5867-4c5e-ae98-86c91d2d37bb" controls width="100%"></video>
 
 ![Demo](https://raw.githubusercontent.com/yasir-ali9/claude-code-line/main/public/demo.png)
 
